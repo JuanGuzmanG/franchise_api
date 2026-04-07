@@ -1,0 +1,32 @@
+
+@baseUrl = http://localhost:8080/api
+
+###
+
+POST {{baseUrl}}/franchises
+Content-Type: application/json
+
+{
+    "name": "Franchise 2",
+    "description": "Description of Franchise 2"
+}
+
+###
+
+POST {{baseUrl}}/franchises/2/branches
+Content-Type: application/json
+
+{
+    "name": "Branch 4",
+    "location": "Location of Branch 4"
+}
+
+###
+
+POST {{baseUrl}}/branches/4/products
+Content-Type: application/json
+
+{
+    "name": "Product 7",
+    "stock": 10
+}

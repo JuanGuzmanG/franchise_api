@@ -1,0 +1,8 @@
+@baseurl = http://localhost:8080/api
+
+PATCH {{baseurl}}/products/2/stock
+Content-Type: application/json
+
+{
+    "stock": 200
+}

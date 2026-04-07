@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:8080/api
+
+
+### Delete a product
+DELETE {{baseUrl}}//branches/4/products/8

@@ -1,0 +1,3 @@
+@baseurl = http://localhost:8080/api
+
+GET {{baseurl}}/franchises/1/top-stock-products
