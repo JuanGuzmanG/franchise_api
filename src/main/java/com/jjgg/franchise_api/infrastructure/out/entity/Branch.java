@@ -1,4 +1,4 @@
-package com.jjgg.franchise_api.infrastructure.entity;
+package com.jjgg.franchise_api.infrastructure.out.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
