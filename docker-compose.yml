@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: franchise_api
+    restart: unless-stopped
+    environment:
+      SPRING_R2DBC_URL: r2dbc:pool:mysql://academysystemdb.mysql.database.azure.com:3306/franchisedb?sslMode=REQUIRED
+      SPRING_R2DBC_USERNAME: useradmin
+      SPRING_R2DBC_PASSWORD: pruebaaccenture#15
+    ports:
+      - "8080:8080"
