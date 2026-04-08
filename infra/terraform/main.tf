@@ -22,7 +22,7 @@ resource "railway_variable" "r2dbc_url" {
   environment_id = var.environment_id
   service_id     = railway_service.app.id
   name           = "R2DBC_URL"
-  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway?sslMode=disabled"
+  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway?sslMode=required"
 }
 
 resource "railway_variable" "r2dbc_username" {
