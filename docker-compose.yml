@@ -6,8 +6,8 @@ services:
     container_name: franchise_api
     restart: unless-stopped
     environment:
-      SPRING_R2DBC_URL: r2dbc:pool:mysql://academysystemdb.mysql.database.azure.com:3306/franchisedb?sslMode=REQUIRED
-      SPRING_R2DBC_USERNAME: useradmin
-      SPRING_R2DBC_PASSWORD: pruebaaccenture#15
+      PORT: 8080
+      R2DBC_URL: ${R2DBC_URL}
+      R2DBC_PASSWORD: ${R2DBC_PASSWORD}
     ports:
       - "8080:8080"

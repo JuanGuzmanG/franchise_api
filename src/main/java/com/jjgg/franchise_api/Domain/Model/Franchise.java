@@ -7,15 +7,17 @@ public class Franchise {
 
     private Long id;
     private String name;
+    private String description;
     private List<Branch> branches;
 
     public Franchise() {
         this.branches = new ArrayList<>();
     }
 
-    public Franchise(Long id, String name, List<Branch> branches) {
+    public Franchise(Long id, String name, String description, List<Branch> branches) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.branches = branches == null ? new ArrayList<>() : branches;
     }
 
@@ -33,6 +35,14 @@ public class Franchise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Branch> getBranches() {

@@ -48,8 +48,10 @@ class FranchiseServiceImplTest {
             return Mono.just(toSave);
         });
 
-        StepVerifier.create(service.createFranchise(new CreateFranchiseRequestDto("Franquicia A")))
-                .expectNextMatches(dto -> dto.id().equals(1L) && dto.name().equals("Franquicia A"))
+        StepVerifier.create(service.createFranchise(new CreateFranchiseRequestDto("Franquicia A", "Descripcion A")))
+                .expectNextMatches(dto -> dto.id().equals(1L)
+                        && dto.name().equals("Franquicia A")
+                        && dto.description().equals("Descripcion A"))
                 .verifyComplete();
 
         verify(franchiseRepository).save(any(Franchise.class));
@@ -57,7 +59,7 @@ class FranchiseServiceImplTest {
 
     @Test
     void addBranchShouldReturnCreatedDto() {
-        Franchise franchise = new Franchise(10L, "Franquicia A");
+        Franchise franchise = new Franchise(10L, "Franquicia A", "Descripcion A");
         Branch savedBranch = new Branch(20L, "Sucursal Norte", 10L);
 
         when(franchiseRepository.findById(10L)).thenReturn(Mono.just(franchise));

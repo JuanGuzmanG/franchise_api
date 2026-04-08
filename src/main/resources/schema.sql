@@ -2,7 +2,8 @@
 
 CREATE TABLE IF NOT EXISTS franchises (
                                           franchise_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                          name         VARCHAR(255) NOT NULL
+                                          name         VARCHAR(255) NOT NULL,
+                                          description  VARCHAR(500)
     );
 
 CREATE TABLE IF NOT EXISTS branches (

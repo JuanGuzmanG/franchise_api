@@ -40,7 +40,7 @@ public class FranchiseServiceImpl implements FranchiseService {
 
     @Override
     public Mono<FranchiseDto> createFranchise(CreateFranchiseRequestDto request) {
-        return franchiseRepository.save(newFranchise(request.name())).map(this::toFranchiseDto);
+        return franchiseRepository.save(newFranchise(request.name(), request.description())).map(this::toFranchiseDto);
     }
 
     @Override
@@ -112,9 +112,10 @@ public class FranchiseServiceImpl implements FranchiseService {
                 .map(this::toProductDto);
     }
 
-    private Franchise newFranchise(String name) {
+    private Franchise newFranchise(String name, String description) {
         Franchise franchise = new Franchise();
         franchise.setName(name);
+        franchise.setDescription(description);
         return franchise;
     }
 
@@ -134,7 +135,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     }
 
     private Franchise copyFranchiseWithName(Franchise source, String name) {
-        return new Franchise(source.getId(), name);
+        return new Franchise(source.getId(), name, source.getDescription());
     }
 
     private Branch copyBranchWithName(Branch source, String name) {
@@ -170,7 +171,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     }
 
     private FranchiseDto toFranchiseDto(Franchise franchise) {
-        return new FranchiseDto(franchise.getId(), franchise.getName());
+        return new FranchiseDto(franchise.getId(), franchise.getName(), franchise.getDescription());
     }
 
     private BranchDto toBranchDto(Branch branch) {

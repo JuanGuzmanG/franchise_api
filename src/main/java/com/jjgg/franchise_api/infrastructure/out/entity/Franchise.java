@@ -21,6 +21,9 @@ public class Franchise {
     @Column("name")
     private String name;
 
+    @Column("description")
+    private String description;
+
 
 }
 

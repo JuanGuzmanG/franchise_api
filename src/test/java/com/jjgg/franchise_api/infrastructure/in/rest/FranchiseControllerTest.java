@@ -36,7 +36,7 @@ class FranchiseControllerTest {
     @Test
     void createFranchiseShouldReturnCreatedStatus() {
         when(franchiseService.createFranchise(any()))
-                .thenReturn(Mono.just(new FranchiseDto(1L, "Franquicia A")));
+                .thenReturn(Mono.just(new FranchiseDto(1L, "Franquicia A", "Descripcion A")));
 
         webTestClient.post()
                 .uri("/api/franchises")
@@ -46,7 +46,8 @@ class FranchiseControllerTest {
                 .expectStatus().isCreated()
                 .expectBody()
                 .jsonPath("$.id").isEqualTo(1)
-                .jsonPath("$.name").isEqualTo("Franquicia A");
+                .jsonPath("$.name").isEqualTo("Franquicia A")
+                .jsonPath("$.description").isEqualTo("Descripcion A");
     }
 
     @Test
