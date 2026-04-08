@@ -40,21 +40,14 @@ public class FranchiseServiceImpl implements FranchiseService {
 
     @Override
     public Mono<FranchiseDto> createFranchise(CreateFranchiseRequestDto request) {
-        Franchise franchise = new Franchise();
-        franchise.setName(request.name());
-        return franchiseRepository.save(franchise).map(this::toFranchiseDto);
+        return franchiseRepository.save(newFranchise(request.name())).map(this::toFranchiseDto);
     }
 
     @Override
     public Mono<BranchDto> addBranch(Long franchiseId, AddBranchRequestDto request) {
         return franchiseRepository.findById(franchiseId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Franchise not found: " + franchiseId)))
-                .flatMap(franchise -> {
-                    Branch branch = new Branch();
-                    branch.setName(request.name());
-                    branch.setFranchiseId(franchise.getId());
-                    return branchRepository.save(branch);
-                })
+                .flatMap(franchise -> branchRepository.save(newBranch(request.name(), franchise.getId())))
                 .map(this::toBranchDto);
     }
 
@@ -62,13 +55,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     public Mono<ProductDto> addProduct(Long branchId, AddProductRequestDto request) {
         return branchRepository.findById(branchId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Branch not found: " + branchId)))
-                .flatMap(branch -> {
-                    Product product = new Product();
-                    product.setName(request.name());
-                    product.setStock(request.stock());
-                    product.setBranchId(branch.getId());
-                    return productRepository.save(product);
-                })
+                .flatMap(branch -> productRepository.save(newProduct(request.name(), request.stock(), branch.getId())))
                 .map(this::toProductDto);
     }
 
@@ -85,10 +72,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     public Mono<ProductDto> updateProductStock(Long productId, UpdateProductStockRequestDto request) {
         return productRepository.findById(productId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Product not found: " + productId)))
-                .flatMap(product -> {
-                    product.setStock(request.stock());
-                    return productRepository.save(product);
-                })
+                .flatMap(product -> productRepository.save(copyProductWithStock(product, request.stock())))
                 .map(this::toProductDto);
     }
 
@@ -108,10 +92,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     public Mono<FranchiseDto> renameFranchise(Long franchiseId, RenameFranchiseRequestDto request) {
         return franchiseRepository.findById(franchiseId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Franchise not found: " + franchiseId)))
-                .flatMap(franchise -> {
-                    franchise.setName(request.name());
-                    return franchiseRepository.save(franchise);
-                })
+                .flatMap(franchise -> franchiseRepository.save(copyFranchiseWithName(franchise, request.name())))
                 .map(this::toFranchiseDto);
     }
 
@@ -119,10 +100,7 @@ public class FranchiseServiceImpl implements FranchiseService {
     public Mono<BranchDto> renameBranch(Long branchId, RenameBranchRequestDto request) {
         return branchRepository.findById(branchId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Branch not found: " + branchId)))
-                .flatMap(branch -> {
-                    branch.setName(request.name());
-                    return branchRepository.save(branch);
-                })
+                .flatMap(branch -> branchRepository.save(copyBranchWithName(branch, request.name())))
                 .map(this::toBranchDto);
     }
 
@@ -130,11 +108,55 @@ public class FranchiseServiceImpl implements FranchiseService {
     public Mono<ProductDto> renameProduct(Long productId, RenameProductRequestDto request) {
         return productRepository.findById(productId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("Product not found: " + productId)))
-                .flatMap(product -> {
-                    product.setName(request.name());
-                    return productRepository.save(product);
-                })
+                .flatMap(product -> productRepository.save(copyProductWithName(product, request.name())))
                 .map(this::toProductDto);
+    }
+
+    private Franchise newFranchise(String name) {
+        Franchise franchise = new Franchise();
+        franchise.setName(name);
+        return franchise;
+    }
+
+    private Branch newBranch(String name, Long franchiseId) {
+        Branch branch = new Branch();
+        branch.setName(name);
+        branch.setFranchiseId(franchiseId);
+        return branch;
+    }
+
+    private Product newProduct(String name, Integer stock, Long branchId) {
+        Product product = new Product();
+        product.setName(name);
+        product.setStock(stock);
+        product.setBranchId(branchId);
+        return product;
+    }
+
+    private Franchise copyFranchiseWithName(Franchise source, String name) {
+        return new Franchise(source.getId(), name);
+    }
+
+    private Branch copyBranchWithName(Branch source, String name) {
+        return new Branch(source.getId(), name, source.getFranchiseId());
+    }
+
+    private Product copyProductWithName(Product source, String name) {
+        Product copy = new Product();
+        copy.setId(source.getId());
+        copy.setName(name);
+        copy.setStock(source.getStock());
+        copy.setBranchId(source.getBranchId());
+        return copy;
+    }
+
+    private Product copyProductWithStock(Product source, Integer stock) {
+        Product copy = new Product();
+        copy.setId(source.getId());
+        copy.setName(source.getName());
+        copy.setStock(stock);
+        copy.setBranchId(source.getBranchId());
+        return copy;
     }
 
     private TopStockProductItemDto toTopStockItem(Branch branch, Product product) {
