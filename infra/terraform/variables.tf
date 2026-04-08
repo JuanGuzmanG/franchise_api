@@ -5,7 +5,7 @@ variable "railway_token" {
 
 variable "project_id" {
   type    = string
-  default = "8886ea43-c307-4049-9bd4-6b391c54d857"
+  default = "78daf110-143a-4406-95a2-847a543e35c2"
 }
 
 variable "environment_id" {

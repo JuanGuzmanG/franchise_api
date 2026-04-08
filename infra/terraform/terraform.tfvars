@@ -1,3 +1,3 @@
-railway_token  = "45b7366d-5576-4196-b2bc-8b141a55704f"
-r2dbc_password = "UaVsFJxUocComYTsAaCPLthHeRlNxUvp"
+railway_token  = "98f04581-087a-4c97-a6f1-69e78c6e4ef1"
+r2dbc_password = "mZUEGQbOiOmGtloAeEUIRpyexXQrHoAi"
 environment_id = "543b72a1-70ca-4bda-afc5-b6db82eee9cd"

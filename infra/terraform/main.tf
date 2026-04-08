@@ -15,18 +15,17 @@ resource "railway_service" "app" {
   project_id  = var.project_id
   name        = "franchise-api"
   source_repo = var.github_repo
+  source_repo_branch = "main"
 }
 
 resource "railway_variable" "r2dbc_url" {
-  project_id     = var.project_id
   environment_id = var.environment_id
   service_id     = railway_service.app.id
   name           = "R2DBC_URL"
-  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway"
+  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway?sslMode=disabled"
 }
 
 resource "railway_variable" "r2dbc_username" {
-  project_id     = var.project_id
   environment_id = var.environment_id
   service_id     = railway_service.app.id
   name           = "R2DBC_USERNAME"
@@ -34,7 +33,6 @@ resource "railway_variable" "r2dbc_username" {
 }
 
 resource "railway_variable" "r2dbc_password" {
-  project_id     = var.project_id
   environment_id = var.environment_id
   service_id     = railway_service.app.id
   name           = "R2DBC_PASSWORD"
