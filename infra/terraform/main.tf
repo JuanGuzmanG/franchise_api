@@ -11,30 +11,23 @@ provider "railway" {
   token = var.railway_token
 }
 
-resource "railway_service" "app" {
-  project_id  = var.project_id
-  name        = "franchise-api"
-  source_repo = var.github_repo
-  source_repo_branch = "main"
-}
-
 resource "railway_variable" "r2dbc_url" {
   environment_id = var.environment_id
-  service_id     = railway_service.app.id
+  service_id     = var.service_id
   name           = "R2DBC_URL"
-  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway?sslMode=required"
+  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway?sslMode=preferred"
 }
 
 resource "railway_variable" "r2dbc_username" {
   environment_id = var.environment_id
-  service_id     = railway_service.app.id
+  service_id     = var.service_id
   name           = "R2DBC_USERNAME"
   value          = "root"
 }
 
 resource "railway_variable" "r2dbc_password" {
   environment_id = var.environment_id
-  service_id     = railway_service.app.id
+  service_id     = var.service_id
   name           = "R2DBC_PASSWORD"
   value          = var.r2dbc_password
 }

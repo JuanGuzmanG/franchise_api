@@ -22,3 +22,8 @@ variable "r2dbc_password" {
   type      = string
   sensitive = true
 }
+
+variable "service_id" {
+  description = "ID del servicio franchise-api creado en Railway UI"
+  type        = string
+}
