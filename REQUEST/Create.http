@@ -7,7 +7,7 @@ POST {{baseUrl}}/franchises
 Content-Type: application/json
 
 {
-    "name": "Franchise 2",
+    "name": "Franchise",
     "description": "Description of Franchise 2"
 }
 
