@@ -11,40 +11,32 @@ provider "railway" {
   token = var.railway_token
 }
 
-data "railway_project" "franchise" {
-  id = "8886ea43-c307-4049-9bd4-6b391c54d857"
-}
-
 resource "railway_service" "app" {
-  project_id = data.railway_project.franchise.id
-  name       = "franchise-api"
-
-  source_repo = "JuanGuzmanG/franchise-api"
+  project_id  = var.project_id
+  name        = "franchise-api"
+  source_repo = var.github_repo
 }
 
 resource "railway_variable" "r2dbc_url" {
-  project_id     = data.railway_project.franchise.id
-  environment_id = data.railway_project.franchise.default_environment_id
+  project_id     = var.project_id
+  environment_id = var.environment_id
   service_id     = railway_service.app.id
-
-  name  = "R2DBC_URL"
-  value = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway"
+  name           = "R2DBC_URL"
+  value          = "r2dbc:pool:mysql://mysql.railway.internal:3306/railway"
 }
 
 resource "railway_variable" "r2dbc_username" {
-  project_id     = data.railway_project.franchise.id
-  environment_id = data.railway_project.franchise.default_environment_id
+  project_id     = var.project_id
+  environment_id = var.environment_id
   service_id     = railway_service.app.id
-
-  name  = "R2DBC_USERNAME"
-  value = "root"
+  name           = "R2DBC_USERNAME"
+  value          = "root"
 }
 
 resource "railway_variable" "r2dbc_password" {
-  project_id     = data.railway_project.franchise.id
-  environment_id = data.railway_project.franchise.default_environment_id
+  project_id     = var.project_id
+  environment_id = var.environment_id
   service_id     = railway_service.app.id
-
-  name  = "R2DBC_PASSWORD"
-  value = var.r2dbc_password
+  name           = "R2DBC_PASSWORD"
+  value          = var.r2dbc_password
 }
