@@ -21,15 +21,5 @@ public class OpenApiConfig {
                 .contact(new Contact().name("Franchise API Team"))
         );
     }
-
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .servers(List.of(
-                        new Server()
-                                .url("https://franchiseapi-production.up.railway.app")
-                                .description("Production")
-                ));
-    }
 }
 
