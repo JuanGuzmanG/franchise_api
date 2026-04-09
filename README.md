@@ -5,6 +5,7 @@ API reactiva (Spring WebFlux + R2DBC MySQL) para gestion de franquicias, sucursa
 ## Documentacion de API (Swagger)
 
 - `https://franchiseapi-production.up.railway.app/swagger-ui/index.html`
+- [Ingresa aquí (desplegado en Railway provisionalmente por fallos en cuota de capacidad de Azure)](https://franchiseapi-production.up.railway.app/swagger-ui/index.html)
 
 
 ## Requisitos
