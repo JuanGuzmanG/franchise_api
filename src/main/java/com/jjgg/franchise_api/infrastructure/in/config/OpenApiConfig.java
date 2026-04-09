@@ -13,13 +13,13 @@ import java.util.List;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI franchiseApiOpenApi() {
-        return new OpenAPI().info(new Info()
-                .title("Franchise API")
-                .description("Reactive API for franchises, branches, and products")
-                .version("v1")
-                .contact(new Contact().name("Franchise API Team"))
-        );
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .servers(List.of(
+                        new Server()
+                                .url("https://franchiseapi-production.up.railway.app")
+                                .description("Production")
+                ));
     }
 }
 
